@@ -2819,6 +2819,7 @@ GameObject:
   - component: {fileID: 95238462852637990}
   - component: {fileID: 65818832351973416}
   - component: {fileID: 205587226595660332}
+  - component: {fileID: 114788619163666582}
   m_Layer: 0
   m_Name: Walker
   m_TagString: Walker
@@ -7185,6 +7186,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114788619163666582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1766836238125016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3627627f356147ffb4110f1d94bd387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dead: 0
 --- !u!137 &137027629811187712
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

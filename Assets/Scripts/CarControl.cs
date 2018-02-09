@@ -11,9 +11,12 @@ public class CarControl : MonoBehaviour
 	private Rigidbody rig;
 
 	private GameObject effect;
+	private GameObject blackbord;
 
 	private int coin = 0;
 	private float cointimer = 0.0f;
+
+	private float dushtimer = 5.0f;
 
 	private bool dush;
 
@@ -31,6 +34,8 @@ public class CarControl : MonoBehaviour
 		rig = GetComponent<Rigidbody>();
 		effect = GameObject.Find("Effect");
 		effect.SetActive(false);
+		blackbord = GameObject.Find("BlackOut");
+		blackbord.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -134,7 +139,16 @@ public class CarControl : MonoBehaviour
 	void CoinManage()
 	{
 		Image coingauge = GameObject.Find("CoinGauge").GetComponent<Image>();
-		coingauge.fillAmount = (float)coin / 10.0f;
+		if (!dush)
+		{
+			coingauge.fillAmount = (float)coin / 10.0f;
+			dushtimer = 5.0f;
+		}	
+		else
+		{
+			dushtimer -= Time.deltaTime;
+			coingauge.fillAmount = dushtimer / 5.0f;
+		}
 
 		Image button = GameObject.Find("DushButton").GetComponent<Image>();
 		Text text = GameObject.Find("DushText").GetComponent<Text>();
@@ -174,9 +188,29 @@ public class CarControl : MonoBehaviour
 			if (!dush)
 			{
 				Instantiate(explosion, transform.position, transform.rotation);
+				blackbord.SetActive(true);
 				Invoke("GameOver", 1.0f);		
 			}
+			else
+			{
+				col.GetComponent<BillsonDead>().dead = true;
+			}
 		}
+
+		//----- ゴールに当たった時の処理 -----
+		if(col.gameObject.tag == "Goal")
+		{
+			StartCoroutine("Goal");
+		}
+	}
+
+	IEnumerator Goal ()
+	{
+		blackbord.SetActive(true);
+
+		yield return new WaitForSeconds(1.0f);
+
+		SceneManager.LoadScene("Goal");
 	}
 
 	void GameOver ()
@@ -189,12 +223,12 @@ public class CarControl : MonoBehaviour
 	{
 		if (!dush && coin == 10)
 		{
-			StartCoroutine("OneSecDush");
+			StartCoroutine("FiveSecDush");
 			coin = 0;
 		}
 	}
 
-	IEnumerator OneSecDush ()
+	IEnumerator FiveSecDush ()
 	{
 		max_speed *= 2;
 		accelaration *= 2;
@@ -205,6 +239,7 @@ public class CarControl : MonoBehaviour
 
 		max_speed /= 2;
 		accelaration /= 2;
+		coin = 0;
 		dush = false;
 		effect.SetActive(false);
 	}

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Coin
   - Walker
+  - Fire
+  - Goal
   layers:
   - Default
   - TransparentFX

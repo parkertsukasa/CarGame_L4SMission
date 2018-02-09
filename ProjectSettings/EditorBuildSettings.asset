@@ -7,4 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Stage.unity
+    guid: aa2f26a8db1104816a40883347e2c934
+  - enabled: 1
+    path: Assets/Scenes/Goal.unity
     guid: 00000000000000000000000000000000
